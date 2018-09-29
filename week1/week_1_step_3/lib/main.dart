@@ -31,6 +31,7 @@ class _MyAppState extends State<StatefulWidget> {
   _MyAppState() {
     init();
   }
+
   Future init() async {
     final response =
         await http.get('https://google.com/about/static/data/locations.json');
@@ -53,6 +54,7 @@ class _MyAppState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         primarySwatch: Colors.red,
       ),
