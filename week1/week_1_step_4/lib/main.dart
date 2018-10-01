@@ -17,7 +17,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void main() => runApp(new MyApp());
@@ -54,49 +53,30 @@ class _MyAppState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     String title = 'Hello Sydney';
 
-    if (Theme.of(context).platform == TargetPlatform.iOS) {
-      return new CupertinoApp(
-        title: 'Flutter iOS Demo',
-        debugShowCheckedModeBanner: false,
-        home: CupertinoPageScaffold(
-            child: Container(
-          color: Color(0xFFEFEFF4),
-          child: CustomScrollView(
-            slivers: <Widget>[
-              CupertinoSliverNavigationBar(
-                largeTitle: Text(title),
-              ),
-              SliverSafeArea(
-                top: false,
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate(divideTiles(
-                    context: context,
-                    tiles: locations,
-                    color: Colors.black26,
-                  )),
-                ),
-              ),
-            ],
-          ),
-        )),
-      );
-    }
-
-    return new MaterialApp(
-      title: 'Flutter Demo',
+    return new CupertinoApp(
+      title: 'Flutter iOS Demo',
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
+      home: CupertinoPageScaffold(
+          child: DecoratedBox(
+        decoration: const BoxDecoration(color: Color(0xFFEFEFF4)),
+        child: CustomScrollView(
+          slivers: <Widget>[
+            CupertinoSliverNavigationBar(
+              largeTitle: Text(title),
+            ),
+            SliverSafeArea(
+              top: false,
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(divideTiles(
+                  context: context,
+                  tiles: locations,
+                  color: Color(0xFF000000),
+                )),
+              ),
+            ),
+          ],
         ),
-        body: ListView.builder(
-          itemCount: locations.length,
-          itemBuilder: (context, index) => locations[index],
-        ),
-      ),
+      )),
     );
   }
 }
@@ -107,10 +87,7 @@ class Location extends StatelessWidget {
   Location({this.name, this.address});
   @override
   Widget build(BuildContext context) {
-    if (Theme.of(context).platform == TargetPlatform.iOS) {
-      return CupertinoListTile(title: Text(name), subtitle: Text(address));
-    }
-    return ListTile(title: Text(name), subtitle: Text(address));
+    return CupertinoListTile(title: Text(name), subtitle: Text(address));
   }
 
   factory Location.fromJson(Map<String, dynamic> json) {
@@ -168,7 +145,7 @@ class CupertinoListTile extends StatelessWidget {
             style: TextStyle(
               fontSize: 14.0,
               letterSpacing: -0.2,
-              color: Colors.black54,
+              color: Color(0xFF000000),
             ),
           ),
           const Padding(padding: EdgeInsets.only(bottom: 6.5)),
@@ -186,7 +163,7 @@ class CupertinoDivider extends StatelessWidget {
     Key key,
     this.height = 16.0,
     this.indent = 0.0,
-    this.color = Colors.black,
+    this.color = const Color(0xFF000000),
   })  : assert(height >= 0.0),
         assert(color != null),
         super(key: key);
