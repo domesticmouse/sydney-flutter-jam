@@ -15,15 +15,16 @@
  */
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:week_1_step_1/main.dart';
+import 'package:week_1_step_2/main.dart';
 
 void main() {
+  
   testWidgets('Content display', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(new MyApp());
 
-    // Verify that we are displaying our "welcoming" message.
-    expect(find.text('Random content goes here'), findsOneWidget);
+    // Verify that we are displaying hard coded list of locations.
+    expect(find.text('Sydney'), findsOneWidget);
     expect(find.text('Not this text'), findsNothing);
 
   });

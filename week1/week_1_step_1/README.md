@@ -1,6 +1,9 @@
 # Week 1, Step 1
 
-A first step in building a Flutter application.
+A first step in building a Flutter application. A Material themed app with
+a centered `Text` widget.
+
+![Step 1 Screenshot](../screenshots/Step_1.png)
 
 ## Getting Started
 
@@ -34,14 +37,13 @@ All done! In order to run your application, type:
 Your main program file is lib/main.dart in the . directory.
 ```
 
-As explained by the output of `flutter create`, you can now run this sample:
+You can now run this sample:
 
 ```bash
 $ flutter run
 Launching lib/main.dart on iPhone 8 in debug mode...
 Starting Xcode build...
  ├─Assembling Flutter resources...                   1.8s
-
  └─Compiling, linking and signing...                 3.3s
 
 Xcode build done.                                           10.8s
@@ -50,4 +52,11 @@ Syncing files to device iPhone 8...                         1.6s
 🔥  To hot reload changes while running, press "r". To hot restart (and rebuild state), press "R".
 An Observatory debugger and profiler on iPhone 8 is available at: http://127.0.0.1:62506/
 For a more detailed help message, press "h". To detach, press "d"; to quit, press "q".
+```
+
+You can also run the test:
+
+```bash
+$ flutter test
+00:06 +1: All tests passed!
 ```

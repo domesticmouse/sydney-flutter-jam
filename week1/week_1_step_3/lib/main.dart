@@ -6,7 +6,7 @@
  * You may obtain a copy of the License at
  * 
  *     https://www.apache.org/licenses/LICENSE-2.0
-
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,22 +19,25 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(new MyApp());
+void main() => runApp(new MyApp(http.Client()));
 
 class MyApp extends StatefulWidget {
+  MyApp(this._client);
+  final http.Client _client;
+
   @override
-  State<StatefulWidget> createState() => _MyAppState();
+  State<StatefulWidget> createState() => _MyAppState(_client);
 }
 
 class _MyAppState extends State<StatefulWidget> {
   List<Location> locations = [];
-  _MyAppState() {
-    init();
+  _MyAppState(http.Client client) {
+    init(client);
   }
 
-  Future init() async {
+  Future init(http.Client client) async {
     final response =
-        await http.get('https://google.com/about/static/data/locations.json');
+        await client.get('https://google.com/about/static/data/locations.json');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
