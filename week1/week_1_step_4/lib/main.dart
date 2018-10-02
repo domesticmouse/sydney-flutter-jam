@@ -6,7 +6,7 @@
  * You may obtain a copy of the License at
  * 
  *     https://www.apache.org/licenses/LICENSE-2.0
-
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,22 +18,27 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:transparent_image/transparent_image.dart';
+import './configuration.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(new MyApp(http.Client()));
 
 class MyApp extends StatefulWidget {
+  final http.Client client;
+  MyApp(this.client);
   @override
-  State<StatefulWidget> createState() => _MyAppState();
+  State<StatefulWidget> createState() => _MyAppState(client);
 }
 
 class _MyAppState extends State<StatefulWidget> {
   List<Location> locations = [];
-  _MyAppState() {
-    init();
+  _MyAppState(http.Client client) {
+    init(client);
   }
-  Future init() async {
+
+  Future init(http.Client client) async {
     final response =
-        await http.get('https://google.com/about/static/data/locations.json');
+        await client.get('https://google.com/about/static/data/locations.json');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -51,14 +56,13 @@ class _MyAppState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String title = 'Hello Sydney';
-
+    String title = 'Hi Sydney Flutterers';
     return new CupertinoApp(
       title: 'Flutter iOS Demo',
       debugShowCheckedModeBanner: false,
       home: CupertinoPageScaffold(
           child: DecoratedBox(
-        decoration: const BoxDecoration(color: Color(0xFFEFEFF4)),
+        decoration: const BoxDecoration(color: backgroundColor),
         child: CustomScrollView(
           slivers: <Widget>[
             CupertinoSliverNavigationBar(
@@ -68,9 +72,8 @@ class _MyAppState extends State<StatefulWidget> {
               top: false,
               sliver: SliverList(
                 delegate: SliverChildListDelegate(divideTiles(
-                  context: context,
                   tiles: locations,
-                  color: Color(0xFF000000),
+                  color: borderColor,
                 )),
               ),
             ),
@@ -84,82 +87,91 @@ class _MyAppState extends State<StatefulWidget> {
 class Location extends StatelessWidget {
   final String name;
   final String address;
-  Location({this.name, this.address});
+  final String imageURL;
+  Location({
+    Key key,
+    this.name,
+    this.address,
+    this.imageURL,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return CupertinoListTile(title: Text(name), subtitle: Text(address));
+    return SafeArea(
+      top: false,
+      bottom: false,
+      minimum: EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                child: Center(child: CupertinoActivityIndicator()),
+                width: 100.0,
+                height: 100.0,
+              ),
+              Container(
+                child: Center(
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: imageURL,
+                    width: 100.0,
+                  ),
+                ),
+                width: 100.0,
+                height: 100.0,
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.only(right: 8.0),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Padding(padding: EdgeInsets.only(top: 8.5)),
+                DefaultTextStyle(
+                  child: Text(name),
+                  style: TextStyle(
+                    fontSize: titleTextSize,
+                    color: titleColor,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 4.0),
+                ),
+                DefaultTextStyle(
+                  child: Text(address),
+                  style: TextStyle(
+                    fontSize: subtitleTextSize,
+                    letterSpacing: -0.2,
+                    color: subtitleColor,
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.only(bottom: 6.5)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
       name: json['name'],
       address: json['address'],
+      imageURL: json['image'],
     );
   }
 }
 
-class CupertinoListTile extends StatelessWidget {
-  /// The primary content of the list tile.
-  ///
-  /// Typically a [Text] widget.
-  final Widget title;
-
-  /// Additional content displayed below the title.
-  ///
-  /// Typically a [Text] widget.
-  final Widget subtitle;
-
-  /// The tile's internal padding.
-  ///
-  /// Insets a [CupertinoListTile]'s contents: its [title] and [subtitle] widgets.
-  ///
-  /// If null, `EdgeInsets.symmetric(horizontal: 16.0)` is used.
-  final EdgeInsetsGeometry contentPadding;
-
-  CupertinoListTile({this.title, this.subtitle, this.contentPadding})
-      : assert(title != null),
-        assert(subtitle != null);
-
-  @override
-  Widget build(BuildContext context) {
-    const EdgeInsets _defaultContentPadding =
-        EdgeInsets.symmetric(horizontal: 16.0);
-    final TextDirection textDirection = Directionality.of(context);
-    final EdgeInsets resolvedContentPadding =
-        contentPadding?.resolve(textDirection) ?? _defaultContentPadding;
-
-    return SafeArea(
-      top: false,
-      bottom: false,
-      minimum: resolvedContentPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Padding(padding: EdgeInsets.only(top: 8.5)),
-          title,
-          const Padding(
-            padding: EdgeInsets.only(top: 4.0),
-          ),
-          DefaultTextStyle(
-            child: subtitle,
-            style: TextStyle(
-              fontSize: 14.0,
-              letterSpacing: -0.2,
-              color: Color(0xFF000000),
-            ),
-          ),
-          const Padding(padding: EdgeInsets.only(bottom: 6.5)),
-        ],
-      ),
-    );
-  }
-}
-
-class CupertinoDivider extends StatelessWidget {
+class Divider extends StatelessWidget {
   /// Creates a material design divider.
   ///
   /// The height must be positive.
-  const CupertinoDivider({
+  const Divider({
     Key key,
     this.height = 16.0,
     this.indent = 0.0,
@@ -222,7 +234,6 @@ class CupertinoDivider extends StatelessWidget {
 
 /// Add a one pixel border in between each tile.
 Iterable<Widget> divideTiles({
-  BuildContext context,
   @required Iterable<Widget> tiles,
   @required Color color,
 }) {
@@ -237,7 +248,7 @@ Iterable<Widget> divideTiles({
     if (first) {
       first = false;
     } else {
-      result.add(CupertinoDivider(
+      result.add(Divider(
         color: color,
         indent: 16.0,
         height: 4.0,
