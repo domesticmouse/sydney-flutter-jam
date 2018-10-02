@@ -5,7 +5,7 @@ as part of the Sydney GDG.
 
 ## Week 1
 
-[Week 1](week1/) contains the tidied up source code from Sydney Flutter Jam #1, divided into three parts, along with a bonus 4th section not covered on the night.
+Week 1 contains the tidied up source code from Sydney Flutter Jam #1, divided into three parts, along with a bonus 4th section not covered on the night.
 
  - [Step 1](week1/week_1_step_1/) has a simple getting started Flutter app, made with `Material` widgets.
  - [Step 2](week1/week_1_step_2/) adds hard coded locations for a couple of Google offices around the world.
