@@ -1,53 +1,17 @@
-# New Project Template
+# Sydney Flutter Jam
 
-This repository contains a template you can use to seed a repository for a
-new open source project.
+This repository contains the code for the Sydney Flutter Jam, being run
+as part of the Sydney GDG.
 
-See go/releasing (available externally at
-https://opensource.google.com/docs/releasing/) for more information about
-releasing a new Google open source project.
+## Week 1
 
-This template uses the Apache license, as is Google's default.  See the
-documentation for instructions on using alternate license.
+[Week 1](week1/) contains the tidied up source code from Sydney Flutter Jam #1, divided into three parts, along with a bonus 4th section not covered on the night.
 
-## How to use this template
+ - [Part 1](week1/week_1_part_1/) has a simple getting started Flutter app, made with `Material` widgets.
+ - [Part 2](week1/week_1_part_2/) adds hard coded locations for a couple of Google offices around the world.
+ - [Part 3](week1/week_1_part_3/) loads the locations from a JSON API endpoint. Here endeth the code covered on the night.
+ - [Part 4](week1/week_1_part_4/) re-does the app using the `Cupertino` widgets, and adds in loading the images for the offices.
 
-1. Check it out from GitHub.
-    * There is no reason to fork it.
-1. Create a new local repository and copy the files from this repo into it.
-1. Modify README.md and CONTRIBUTING.md to represent your project, not the
-   template project.
-1. Develop your new project!
+ ## Week 2
 
-``` shell
-git clone https://github.com/google/new-project
-mkdir my-new-thing
-cd my-new-thing
-git init
-cp ../new-project/* .
-git add *
-git commit -a -m 'Boilerplate for new Google open source project'
-```
-
-## Source Code Headers
-
-Every file containing source code must include copyright and license
-information. This includes any JS/CSS files that you might be serving out to
-browsers. (This is to help well-intentioned people avoid accidental copying that
-doesn't comply with the license.)
-
-Apache header:
-
-    Copyright 2018 Google LLC
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+ Coming soon.
