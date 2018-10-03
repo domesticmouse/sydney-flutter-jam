@@ -24,27 +24,21 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        primarySwatch: Colors.red,
-      ),
+      theme: new ThemeData(primarySwatch: Colors.red),
       home: new MyHomePage(title: 'Hello Sydney Flutterers'),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  final String title;
   MyHomePage({this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text("Random content goes here"),
-      ),
+      appBar: AppBar(title: Text(title)),
+      body: Center(child: Text("Random content goes here")),
     );
   }
 }

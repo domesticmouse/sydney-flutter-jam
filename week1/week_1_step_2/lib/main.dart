@@ -24,19 +24,15 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        primarySwatch: Colors.red,
-      ),
+      theme: new ThemeData(primarySwatch: Colors.red),
       home: new MyHomePage(title: 'Hello Sydney Flutterers'),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
+  MyHomePage({this.title});
   final String title;
-
-  // A couple of Google office locations from
-  // https://www.google.com/about/locations/
   final List<Location> locations = <Location>[
     Location(
       name: "Ann Arbor",
@@ -52,20 +48,11 @@ class MyHomePage extends StatelessWidget {
     ),
   ];
 
-  MyHomePage({this.title});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        // https://flutter.io/cookbook/lists/basic-list/
-        child: ListView(
-          children: locations,
-        ),
-      ),
+      appBar: AppBar(title: Text(title)),
+      body: ListView(children: locations),
     );
   }
 }

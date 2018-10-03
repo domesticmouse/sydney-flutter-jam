@@ -40,7 +40,6 @@ class _MyAppState extends State<StatefulWidget> {
         await client.get('https://google.com/about/static/data/locations.json');
 
     if (response.statusCode == 200) {
-      // If the call to the server was successful, parse the JSON
       List<dynamic> officesJson = json.decode(response.body)['offices'];
       List<Location> locations = [];
       for (var i = 0; i < officesJson.length; i++) {
@@ -48,7 +47,6 @@ class _MyAppState extends State<StatefulWidget> {
       }
       setState(() => this.locations = locations);
     } else {
-      // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
     }
   }
@@ -58,9 +56,7 @@ class _MyAppState extends State<StatefulWidget> {
     return new MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        primarySwatch: Colors.red,
-      ),
+      theme: new ThemeData(primarySwatch: Colors.red),
       home: new MyHomePage(
         title: 'Hello Sydney Flutterers',
         locations: locations,
@@ -70,24 +66,15 @@ class _MyAppState extends State<StatefulWidget> {
 }
 
 class MyHomePage extends StatelessWidget {
+  MyHomePage({this.title, this.locations});
   final String title;
   final List<Location> locations;
-
-  MyHomePage({
-    this.title,
-    this.locations,
-  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: ListView.builder(
-        itemCount: locations.length,
-        itemBuilder: (context, index) => locations[index],
-      ),
+      appBar: AppBar(title: Text(title)),
+      body: new ListView(children: locations),
     );
   }
 }
@@ -96,6 +83,7 @@ class Location extends StatelessWidget {
   final String name;
   final String address;
   Location({this.name, this.address});
+
   @override
   Widget build(BuildContext context) {
     return ListTile(title: Text(name), subtitle: Text(address));
@@ -108,4 +96,3 @@ class Location extends StatelessWidget {
     );
   }
 }
-
