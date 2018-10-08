@@ -73,7 +73,7 @@ void main() {
 
     // Verify that we are displaying our Aarhus office.
     expect(find.text('Aarhus'), findsOneWidget);
-    // Also verify Sydey is on page.
+    // Also verify Sydney is on page.
     expect(find.text('Sydney'), findsOneWidget);
   });
 }
