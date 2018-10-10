@@ -22,7 +22,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
   http: ^0.12.0
 
 dev_dependencies:
@@ -32,3 +31,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  application:
+    androidPackage: com.example.week1step3
+    iosBundleIdentifier: com.example.week1Step3
