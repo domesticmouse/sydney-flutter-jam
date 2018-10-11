@@ -12,6 +12,11 @@ Week 1 contains the tidied up source code from Sydney Flutter Jam #1, divided in
  - [Step 3](week1/week_1_step_3/) loads the locations from a JSON API endpoint. Here endeth the code covered on the night.
  - [Step 4](week1/week_1_step_4/) re-does the app using the `Cupertino` widgets, and adds in loading the images for the offices.
 
+ I have published a write up exploring these steps in greater detail on Medium as 
+ [Sydney Flutter Jam #1](https://medium.com/@domesticmouse/sydney-flutter-jam-1-7132dc643cd8).
+
+Please note, these samples are tracking dev channel, not beta.
+
  ## Week 2
 
  Coming soon.
