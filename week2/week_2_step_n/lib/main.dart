@@ -25,20 +25,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: title,
       theme: ThemeData(primarySwatch: Colors.orange),
-      home: MyHomePage(title: title),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: TodoListWidget(),
+      home: Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: TodoListWidget(),
+      ),
     );
   }
 }
@@ -57,7 +47,7 @@ class _TodoListWidgetState extends State<TodoListWidget> {
   ];
   final todoController = TextEditingController();
 
-  _addTodoItem() {
+  void _addTodoItem() {
     setState(() {
       _todoWidgets.add(TodoWidget(description: todoController.text));
       todoController.clear();
