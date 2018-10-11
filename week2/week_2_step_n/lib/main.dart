@@ -67,27 +67,40 @@ class _TodoListWidgetState extends State<TodoListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: TextField(
-                controller: todoController,
-                decoration: InputDecoration(
-                  labelText: 'What would you like to do?',
-                  hintText: 'Run away to the circus...',
+    return SafeArea(
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: TextField(
+                      controller: todoController,
+                      decoration: InputDecoration(
+                        labelText: 'What would you like to do?',
+                        hintText: 'Run away to the circus...',
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                IconButton(
+                  onPressed: _addTodoItem,
+                  icon: Icon(Icons.add),
+                ),
+              ],
             ),
-            IconButton(
-              onPressed: _addTodoItem,
-              icon: Icon(Icons.add),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _todoWidgets.length,
+              itemBuilder: (context, index) => _todoWidgets[index],
             ),
-          ],
-        ),
-        Expanded(child: ListView(children: _todoWidgets)),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
