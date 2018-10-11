@@ -16,16 +16,16 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final String title = 'Todo App';
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: title,
-      theme: new ThemeData(primarySwatch: Colors.blue),
-      home: new MyHomePage(title: title),
+      theme: ThemeData(primarySwatch: Colors.orange),
+      home: MyHomePage(title: title),
     );
   }
 }
@@ -36,8 +36,8 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: new Text(title)),
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
       body: TodoListWidget(),
     );
   }
@@ -47,27 +47,27 @@ class TodoListWidget extends StatefulWidget {
   TodoListWidget({Key key}) : super(key: key);
 
   @override
-  _TodoListWidgetState createState() => new _TodoListWidgetState();
+  _TodoListWidgetState createState() => _TodoListWidgetState();
 }
 
 class _TodoListWidgetState extends State<TodoListWidget> {
-  var todoWidgets = <TodoWidget>[
+  final _todoWidgets = <TodoWidget>[
     TodoWidget(description: 'Get a haircut'),
     TodoWidget(description: 'Get a real job'),
   ];
-  final todoController = new TextEditingController();
+  final todoController = TextEditingController();
 
-  void addTodoItem() {
+  _addTodoItem() {
     setState(() {
-      todoWidgets.add(TodoWidget(description: todoController.text));
+      _todoWidgets.add(TodoWidget(description: todoController.text));
       todoController.clear();
-      print(todoWidgets);
+      print(_todoWidgets);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
+    return Column(
       children: <Widget>[
         Row(
           children: <Widget>[
@@ -81,12 +81,12 @@ class _TodoListWidgetState extends State<TodoListWidget> {
               ),
             ),
             IconButton(
-              onPressed: this.addTodoItem,
+              onPressed: _addTodoItem,
               icon: Icon(Icons.add),
             ),
           ],
         ),
-        Expanded(child: ListView(children: todoWidgets)),
+        Expanded(child: ListView(children: _todoWidgets)),
       ],
     );
   }
