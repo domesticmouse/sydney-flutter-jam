@@ -21,31 +21,29 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   final String title = 'Todo App';
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: title,
-      theme: ThemeData(primarySwatch: Colors.orange),
-      home: Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: TodoListWidget(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: title,
+        theme: ThemeData(primarySwatch: Colors.orange),
+        home: Scaffold(
+          appBar: AppBar(title: Text(title)),
+          body: const TodoListWidget(),
+        ),
+      );
 }
 
 class TodoListWidget extends StatefulWidget {
-  TodoListWidget({Key key}) : super(key: key);
+  const TodoListWidget({Key key}) : super(key: key);
 
   @override
   _TodoListWidgetState createState() => _TodoListWidgetState();
 }
 
 class _TodoListWidgetState extends State<TodoListWidget> {
-  final _todoWidgets = <TodoWidget>[
-    TodoWidget(description: 'Get a haircut'),
-    TodoWidget(description: 'Get a real job'),
+  final List<TodoWidget> _todoWidgets = [
+    const TodoWidget(description: 'Get a haircut'),
+    const TodoWidget(description: 'Get a real job'),
   ];
-  final todoController = TextEditingController();
+  final TextEditingController todoController = TextEditingController();
 
   void _addTodoItem() {
     setState(() {
@@ -64,7 +62,7 @@ class _TodoListWidgetState extends State<TodoListWidget> {
             Expanded(
               child: TextField(
                 controller: todoController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'What would you like to do?',
                   hintText: 'Run away to the circus...',
                 ),
@@ -72,7 +70,7 @@ class _TodoListWidgetState extends State<TodoListWidget> {
             ),
             IconButton(
               onPressed: _addTodoItem,
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
             ),
           ],
         ),
@@ -83,7 +81,7 @@ class _TodoListWidgetState extends State<TodoListWidget> {
 }
 
 class TodoWidget extends StatelessWidget {
-  TodoWidget({Key key, this.description, this.done}) : super(key: key);
+  const TodoWidget({Key key, this.description, this.done}) : super(key: key);
   final String description;
   final bool done;
 
