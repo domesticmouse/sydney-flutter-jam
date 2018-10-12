@@ -54,43 +54,41 @@ class _TodoListWidgetState extends State<TodoListWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(left: 16.0),
-                    child: TextField(
-                      controller: todoController,
-                      decoration: InputDecoration(
-                        labelText: 'What would you like to do?',
-                        hintText: 'Run away to the circus...',
+  Widget build(BuildContext context) => SafeArea(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: TextField(
+                        controller: todoController,
+                        decoration: const InputDecoration(
+                          labelText: 'What would you like to do?',
+                          hintText: 'Run away to the circus...',
+                        ),
                       ),
                     ),
                   ),
-                ),
-                IconButton(
-                  onPressed: _addTodoItem,
-                  icon: Icon(Icons.add),
-                ),
-              ],
+                  IconButton(
+                    onPressed: _addTodoItem,
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _todoWidgets.length,
-              itemBuilder: (context, index) => _todoWidgets[index],
+            Expanded(
+              child: ListView.builder(
+                itemCount: _todoWidgets.length,
+                itemBuilder: (context, index) => _todoWidgets[index],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
+          ],
+        ),
+      );
 }
 
 class TodoWidget extends StatelessWidget {
