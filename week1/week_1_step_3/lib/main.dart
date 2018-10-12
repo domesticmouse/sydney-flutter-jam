@@ -18,11 +18,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import './location.dart';
 
-void main() => runApp(new MyApp(http.Client()));
+void main() => runApp(MyApp(http.Client()));
 
 class MyApp extends StatefulWidget {
-  MyApp(this._client);
+  const MyApp(this._client);
   final http.Client _client;
 
   @override
@@ -30,43 +31,40 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<StatefulWidget> {
-  List<Location> locations = [];
   _MyAppState(http.Client client) {
     init(client);
   }
+  List<Location> locations = [];
 
   Future init(http.Client client) async {
     final response =
         await client.get('https://google.com/about/static/data/locations.json');
 
     if (response.statusCode == 200) {
-      List<dynamic> officesJson = json.decode(response.body)['offices'];
-      List<Location> locations = [];
-      for (var i = 0; i < officesJson.length; i++) {
-        locations.add(Location.fromJson(officesJson[i]));
-      }
-      setState(() => this.locations = locations);
+      final offices =
+          Offices.fromJson(json.decode(response.body) as Map<String, dynamic>);
+      setState(() {
+        locations = offices.offices;
+      });
     } else {
       throw Exception('Failed to load post');
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: new ThemeData(primarySwatch: Colors.red),
-      home: new MyHomePage(
-        title: 'Hello Sydney Flutterers',
-        locations: locations,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.red),
+        home: MyHomePage(
+          title: 'Hello Sydney Flutterers',
+          locations: locations,
+        ),
+      );
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({this.title, this.locations});
+  const MyHomePage({this.title, this.locations});
   final String title;
   final List<Location> locations;
 
@@ -74,25 +72,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: new ListView(children: locations),
-    );
-  }
-}
-
-class Location extends StatelessWidget {
-  final String name;
-  final String address;
-  Location({this.name, this.address});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(title: Text(name), subtitle: Text(address));
-  }
-
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
-      name: json['name'],
-      address: json['address'],
+      body: ListView(children: locations),
     );
   }
 }

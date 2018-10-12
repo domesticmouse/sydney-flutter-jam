@@ -24,11 +24,15 @@ dependencies:
     sdk: flutter
   http: ^0.12.0
   transparent_image: ^0.1.0
+  json_annotation: ^1.2.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^3.0.0
+  build_runner: ^1.0.0
+  json_serializable: ^1.5.1
 
 flutter:
   uses-material-design: true

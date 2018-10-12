@@ -18,13 +18,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:week_1_step_1/main.dart';
 
 void main() {
-  testWidgets('Content display', (WidgetTester tester) async {
+  testWidgets('Content display', (tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(new MyApp());
+    await tester.pumpWidget(MyApp());
 
     // Verify that we are displaying our "welcoming" message.
     expect(find.text('Random content goes here'), findsOneWidget);
     expect(find.text('Not this text'), findsNothing);
-
   });
 }

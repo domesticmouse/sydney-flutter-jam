@@ -16,29 +16,25 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: new ThemeData(primarySwatch: Colors.red),
-      home: new MyHomePage(title: 'Hello Sydney Flutterers'),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.red),
+        home: const MyHomePage(title: 'Hello Sydney Flutterers'),
+      );
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({this.title});
+  const MyHomePage({this.title});
   final String title;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(child: Text("Random content goes here")),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: const Center(child: Text('Random content goes here')),
+      );
 }

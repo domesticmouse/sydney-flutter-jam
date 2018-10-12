@@ -18,36 +18,36 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:transparent_image/transparent_image.dart';
 import './configuration.dart';
+import './location.dart';
 
-void main() => runApp(new MyApp(http.Client()));
+void main() => runApp(MyApp(http.Client()));
 
 class MyApp extends StatefulWidget {
+  const MyApp(this.client);
   final http.Client client;
-  MyApp(this.client);
   @override
   State<StatefulWidget> createState() => _MyAppState(client);
 }
 
 class _MyAppState extends State<StatefulWidget> {
-  List<Location> locations = [];
   _MyAppState(http.Client client) {
     init(client);
   }
+  final List<Location> locations = <Location>[];
 
-  Future init(http.Client client) async {
+  Future<void> init(http.Client client) async {
     final response =
         await client.get('https://google.com/about/static/data/locations.json');
 
     if (response.statusCode == 200) {
-      // If the call to the server was successful, parse the JSON
-      List<dynamic> officesJson = json.decode(response.body)['offices'];
-      List<Location> locations = [];
-      for (var i = 0; i < officesJson.length; i++) {
-        locations.add(Location.fromJson(officesJson[i]));
-      }
-      setState(() => this.locations = locations);
+      setState(() {
+        locations
+          ..clear()
+          ..addAll(Offices.fromJson(
+                  json.decode(response.body) as Map<String, dynamic>)
+              .offices);
+      });
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
@@ -56,8 +56,8 @@ class _MyAppState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String title = 'Hi Sydney Flutterers';
-    return new CupertinoApp(
+    const title = 'Hi Sydney Flutterers';
+    return CupertinoApp(
       title: 'Flutter iOS Demo',
       debugShowCheckedModeBanner: false,
       home: CupertinoPageScaffold(
@@ -65,7 +65,7 @@ class _MyAppState extends State<StatefulWidget> {
         decoration: const BoxDecoration(color: backgroundColor),
         child: CustomScrollView(
           slivers: <Widget>[
-            CupertinoSliverNavigationBar(
+            const CupertinoSliverNavigationBar(
               largeTitle: Text(title),
             ),
             SliverSafeArea(
@@ -80,89 +80,6 @@ class _MyAppState extends State<StatefulWidget> {
           ],
         ),
       )),
-    );
-  }
-}
-
-class Location extends StatelessWidget {
-  final String name;
-  final String address;
-  final String imageURL;
-  Location({
-    Key key,
-    this.name,
-    this.address,
-    this.imageURL,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      bottom: false,
-      minimum: EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Container(
-                child: Center(child: CupertinoActivityIndicator()),
-                width: 100.0,
-                height: 100.0,
-              ),
-              Container(
-                child: Center(
-                  child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: imageURL,
-                    width: 100.0,
-                  ),
-                ),
-                width: 100.0,
-                height: 100.0,
-              ),
-            ],
-          ),
-          const Padding(
-            padding: EdgeInsets.only(right: 8.0),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Padding(padding: EdgeInsets.only(top: 8.5)),
-                DefaultTextStyle(
-                  child: Text(name),
-                  style: TextStyle(
-                    fontSize: titleTextSize,
-                    color: titleColor,
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 4.0),
-                ),
-                DefaultTextStyle(
-                  child: Text(address),
-                  style: TextStyle(
-                    fontSize: subtitleTextSize,
-                    letterSpacing: -0.2,
-                    color: subtitleColor,
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(bottom: 6.5)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
-      name: json['name'],
-      address: json['address'],
-      imageURL: json['image'],
     );
   }
 }
@@ -203,8 +120,11 @@ class Divider extends StatelessWidget {
   /// ```
   final Color color;
 
-  static BorderSide createBorderSide(BuildContext context,
-      {Color color, double width = 0.0}) {
+  static BorderSide createBorderSide(
+    BuildContext context, {
+    @required Color color,
+    double width = 0.0,
+  }) {
     assert(width != null);
     assert(color != null);
     return BorderSide(
@@ -214,35 +134,33 @@ class Divider extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: Center(
-        child: Container(
-          height: 0.0,
-          margin: EdgeInsetsDirectional.only(start: indent),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: createBorderSide(context, color: color),
+  Widget build(BuildContext context) => SizedBox(
+        height: height,
+        child: Center(
+          child: Container(
+            height: 0.0,
+            margin: EdgeInsetsDirectional.only(start: indent),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: createBorderSide(context, color: color),
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 /// Add a one pixel border in between each tile.
-Iterable<Widget> divideTiles({
-  @required Iterable<Widget> tiles,
+List<Widget> divideTiles({
+  @required List<Widget> tiles,
   @required Color color,
 }) {
   assert(tiles != null);
   assert(color != null);
-  var result = <Widget>[];
+  final result = <Widget>[];
 
-  final Iterator<Widget> iterator = tiles.iterator;
-  bool first = true;
+  final iterator = tiles.iterator;
+  var first = true;
 
   while (iterator.moveNext()) {
     if (first) {

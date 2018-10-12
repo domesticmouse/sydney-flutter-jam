@@ -16,53 +16,50 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: new ThemeData(primarySwatch: Colors.red),
-      home: new MyHomePage(title: 'Hello Sydney Flutterers'),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.red),
+        home: MyHomePage(title: 'Hello Sydney Flutterers'),
+      );
 }
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({this.title});
   final String title;
   final List<Location> locations = <Location>[
-    Location(
-      name: "Ann Arbor",
-      address: "2300 Traverwood Drive, Ann Arbor, MI 48105, United States",
+    const Location(
+      name: 'Ann Arbor',
+      address: '2300 Traverwood Drive, Ann Arbor, MI 48105, United States',
     ),
-    Location(
-      name: "Atlanta",
-      address: "10 10th Street NE, Atlanta, GA 30309, United States",
+    const Location(
+      name: 'Atlanta',
+      address: '10 10th Street NE, Atlanta, GA 30309, United States',
     ),
-    Location(
-      name: "Sydney",
-      address: "48 Pirrama Road, Sydney, NSW 2009, Australia",
+    const Location(
+      name: 'Sydney',
+      address: '48 Pirrama Road, Sydney, NSW 2009, Australia',
     ),
   ];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: ListView(children: locations),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: ListView(children: locations),
+      );
 }
 
 class Location extends StatelessWidget {
+  const Location({this.name, this.address});
   final String name;
   final String address;
-  Location({this.name, this.address});
   @override
-  Widget build(BuildContext context) {
-    return ListTile(title: Text(name), subtitle: Text(address));
-  }
+  Widget build(BuildContext context) => ListTile(
+        title: Text(name),
+        subtitle: Text(address),
+      );
 }
