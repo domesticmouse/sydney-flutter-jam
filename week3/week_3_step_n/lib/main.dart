@@ -59,15 +59,17 @@ class MyHomePage extends StatelessWidget {
                   return Text('Error: ${snapshot.error}');
                 }
                 if (snapshot.data.statusCode == 200) {
-                  print(snapshot.data.body);
-                  return ListView(
-                      children:
-                          // ignore: avoid_as
-                          (json.decode(snapshot.data.body) as List<dynamic>)
-                              .map((json) => CatalogItem.fromJson(
-                                  // ignore: avoid_as
-                                  json as Map<String, dynamic>))
-                              .toList());
+                  final items =
+                      // ignore: avoid_as
+                      (json.decode(snapshot.data.body) as List<dynamic>)
+                          .map((json) => CatalogItem.fromJson(
+                              // ignore: avoid_as
+                              json as Map<String, dynamic>))
+                          .toList();
+                  return ListView.builder(
+                    itemBuilder: (context, index) => items[index],
+                    itemCount: items.length,
+                  );
                 }
                 // We are looking at an error response of some kind.
                 return Text(snapshot.data.body);

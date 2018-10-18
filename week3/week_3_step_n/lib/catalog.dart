@@ -18,6 +18,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:html/parser.dart' as html;
 
 // See https://medium.com/flutter-io/some-options-for-deserializing-json-with-flutter-7481325a4450
 // for detail on how to use json_serializable with Flutter.
@@ -53,14 +54,61 @@ class CatalogItem extends StatelessWidget {
   @override
   String toString({DiagnosticLevel minLevel}) => json.encode(toJson());
 
+  Widget icon({@required double width, @required double height}) {
+    Widget icon = Image.network(
+        'https://flutter.io/images/catalog-widget-placeholder.png',
+        width: width,
+        height: height);
+    if (image.isNotEmpty) {
+      if (image.startsWith('<img')) {
+        final path =
+            html.parse(image).getElementsByTagName('img')[0].attributes['src'];
+        if (path.startsWith('https://') || path.startsWith('http://')) {
+          icon = Image.network(path, width: width, height: height);
+        }
+      }
+      if (image.startsWith('<svg')) {
+        icon = SvgPicture.string(image, width: width, height: height);
+      }
+    }
+    return icon;
+  }
+
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: SvgPicture.string(
-          image,
-          width: 55,
-          height: 55,
-        ),
+        leading: icon(width: 55, height: 55),
         title: Text(name),
         subtitle: Text(description),
+        onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CatalogItemDetail(item: this),
+              ),
+            ),
+      );
+}
+
+class CatalogItemDetail extends StatelessWidget {
+  const CatalogItemDetail({@required this.item}) : assert(item != null);
+  final CatalogItem item;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(item.name),
+        ),
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Center(
+                child: item.icon(
+                  width: 300,
+                  height: 300,
+                ),
+              ),
+            ),
+          ],
+        ),
       );
 }
