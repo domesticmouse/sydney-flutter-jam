@@ -1,0 +1,30 @@
+name: week_3_step_n
+description: A new flutter application project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.12.0
+  json_annotation: ^1.2.0
+  flutter_markdown: ^0.2.0
+  flutter_svg: ^0.6.1+1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^3.0.0
+  build_runner: ^1.0.0
+  json_serializable: ^1.5.1
+
+
+
+flutter:
+  uses-material-design: true
+  application:
+    androidPackage: com.example.week3stepn
+    iosBundleIdentifier: com.example.week3Stepn
