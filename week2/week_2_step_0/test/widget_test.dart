@@ -14,6 +14,18 @@
  * limitations under the License.
  */
 
+import 'package:flutter_study_jam_week_2/main.dart';
+import 'package:flutter_test/flutter_test.dart';
+
 void main() {
-  // TODO(brettmorgan): actually test stuff.
+  testWidgets('List todos test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(new MyApp());
+
+    expect(find.text('GDG Flutter Sydney'), findsOneWidget);
+    expect(find.text('Prepare content for next meetup'), findsOneWidget);
+    expect(find.text('Find venue'), findsOneWidget);
+    expect(find.text('Organise food'), findsOneWidget);
+    expect(find.text('Draft Meetup event'), findsOneWidget);
+  });
 }

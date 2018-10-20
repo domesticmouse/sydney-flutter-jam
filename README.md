@@ -19,4 +19,15 @@ Please note, these samples are tracking dev channel, not beta.
 
  ## Week 2
 
- Coming soon.
+Week 2 contains the tidied up source code from Sydney Flutter Jam #2, divided into three parts, along with a bonus 4th section not covered on the night. The goal was to create a simple Todo app that communicates with Firebase
+
+ - [Step 0](week2/week_2_step_0/) has the code you cas use as a starting point. A simple list of hard coded todos.
+ - [Step 1](week2/week_2_step_1/) adds text input to create new todos.
+ - [Step 2](week2/week_2_step_2/) adds the necessary configuration to communicate with Firebase
+ - [Step 3](week2/week_2_step_3/) loads, adds, update, deletes todos from Firebase.
+ - [Step 4](week2/week_2_step_4/) extracts some of the Firebase logic and abstracts it away behind a BLoC
+
+Please note, these samples are tracking dev channel, not beta.
+
+ ## Week 3
+ Coming soon
