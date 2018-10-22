@@ -1,5 +1,5 @@
 name: week_2_step_n
-description: A new flutter application project.
+description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
@@ -16,6 +16,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  application:
-    androidPackage: com.example.week2stepn
-    iosBundleIdentifier: com.example.week2Stepn

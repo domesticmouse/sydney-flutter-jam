@@ -26,7 +26,6 @@ dependencies:
   transparent_image: ^0.1.0
   json_annotation: ^1.2.0
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -36,6 +35,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  application:
-    androidPackage: com.example.week1step4
-    iosBundleIdentifier: com.example.week1Step4

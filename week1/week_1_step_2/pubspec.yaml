@@ -29,6 +29,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  application:
-    androidPackage: com.example.week1step2
-    iosBundleIdentifier: com.example.week1Step2
