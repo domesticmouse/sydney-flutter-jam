@@ -5,14 +5,26 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	http.HandleFunc("/", indexHandler)
+
+	headersOk := handlers.AllowedHeaders([]string{"Authorization"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "POST", "OPTIONS"})
+
+	var router = mux.NewRouter()
+	router.HandleFunc("/", indexHandler).Methods("GET")
+	router.HandleFunc("/recipes/", recipesListHandler).Methods("GET")
+	router.HandleFunc("/recipes/{id:[0-9]+}", recipeHandler).Methods("GET")
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -21,14 +33,24 @@ func main() {
 	}
 
 	log.Printf("Listening on port %s", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), handlers.CORS(originsOk, headersOk, methodsOk)(router)))
 }
 
-// indexHandler responds to requests with our greeting.
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
-	fmt.Fprint(w, "Hello, World!")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"message": "Hello, World!"})
+}
+
+func recipesListHandler(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(map[string]string{"message": "recipes!"})
+}
+
+func recipeHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	json.NewEncoder(w).Encode(map[string]string{"message": fmt.Sprintf("Recipe %v", id)})
 }
