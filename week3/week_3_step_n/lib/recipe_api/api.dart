@@ -15,9 +15,9 @@
  */
 
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter/material.dart';
-import './flutter_food_api.dart';
 
 // See https://medium.com/flutter-io/some-options-for-deserializing-json-with-flutter-7481325a4450
 // for detail on how to use json_serializable with Flutter.
@@ -25,10 +25,50 @@ import './flutter_food_api.dart';
 // Tl;dr:
 // $ flutter packages pub run build_runner build
 
-part 'recipe.g.dart';
+part './api.g.dart';
+part './widgets.dart';
+
+class FlutterRecipeApi {
+  static const String _baseUrl =
+      'https://flutter-recipe-api.appspot.com/recipes/';
+
+  static Future<List<RecipeHeader>> listRecipes() async {
+    final response = await http.get(_baseUrl);
+    if (response.statusCode == 200) {
+      final recipes = (json.decode(response.body) as List<dynamic>)
+          .map((r) => RecipeHeader.fromJson(r as Map<String, dynamic>))
+          .toList();
+      print('Recipes: $recipes');
+      return recipes;
+    }
+
+    print('Retrieving recipes failed: ${response.reasonPhrase}');
+    throw FlutterApiException(
+        'Could not retrieve Recipes: ${response.reasonPhrase}');
+  }
+
+  static Future<Recipe> getRecipe(int id) async {
+    final response = await http.get('$_baseUrl$id');
+    if (response.statusCode == 200) {
+      final recipe = Recipe.fromJson(
+          json.decode(response.body) as Map<String, dynamic>);
+      print('Recipe: $recipe');
+      return recipe;
+    }
+
+    print('Retrieving recipes failed: ${response.reasonPhrase}');
+    throw FlutterApiException(
+        'Could not retrieve Recipe $id: ${response.reasonPhrase}');
+  }
+}
+
+class FlutterApiException implements Exception {
+  FlutterApiException(this.cause);
+  final String cause;
+}
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class RecipeHeader extends StatelessWidget {
+class RecipeHeader {
   const RecipeHeader({
     this.id,
     this.name,
@@ -43,34 +83,6 @@ class RecipeHeader extends StatelessWidget {
   final String name;
   final String shortDescription;
   final String imageId;
-
-  @override
-  Widget build(BuildContext context) => ListTile(
-        title: Text(name),
-        subtitle: Text(shortDescription),
-        onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Scaffold(
-                      appBar: AppBar(
-                        title: Text(name),
-                      ),
-                      body: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(32.0),
-                            child: FutureBuilder(
-                              future: FlutterRecipeApi.getRecipe(id),
-                              builder: (context, snapshot) =>
-                                  Text(snapshot.connectionState.toString()),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-              ),
-            ),
-      );
 
   Map<String, dynamic> toJson() => _$RecipeHeaderToJson(this);
 

@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:week_3_step_n/flutter_food_api.dart';
-import 'package:week_3_step_n/recipe.dart';
+import './recipe_api/api.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,20 +45,20 @@ class MyHomePage extends StatelessWidget {
           future: _futureResponse,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                return const Text('ConnectionState.none');
-              case ConnectionState.active:
-                return const Text('ConnectionState.active');
               case ConnectionState.done:
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
                 return ListView.builder(
-                  itemBuilder: (context, index) => snapshot.data[index],
+                  itemBuilder: (context, index) =>
+                      RecipeHeaderWidget(snapshot.data[index]),
                   itemCount: snapshot.data.length,
                 );
               case ConnectionState.waiting:
-                return const Text('ConnectionState.waiting');
+                // TODO(DomesticMouse): Loading spinner
+                return const Text('Loading');
+              default:
+                return const Text('');
             }
           },
         ),
