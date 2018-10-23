@@ -17,10 +17,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:week_3_step_n/catalog.dart';
-
-const String widgetsURL =
-    'https://raw.githubusercontent.com/flutter/website/dash/src/_data/catalog/widgets.json';
+import 'package:week_3_step_n/flutter_food_api.dart';
+import 'package:week_3_step_n/recipe.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,25 +26,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(primarySwatch: Colors.pink),
-        home: MyHomePage(title: 'Bob\'s Widgets'),
+        theme: ThemeData(primarySwatch: Colors.orange),
+        home: MyHomePage(title: 'Flutter Food'),
       );
 }
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title})
-      : _futureResponse = http.get(widgetsURL),
+      : _futureResponse = FlutterRecipeApi.listRecipes(),
         super(key: key);
 
   final String title;
-  final Future<http.Response> _futureResponse;
+  final Future<List<RecipeHeader>> _futureResponse;
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(title),
         ),
-        body: FutureBuilder<http.Response>(
+        body: FutureBuilder<List<RecipeHeader>>(
           future: _futureResponse,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
@@ -58,22 +56,10 @@ class MyHomePage extends StatelessWidget {
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
-                if (snapshot.data.statusCode == 200) {
-                  final items =
-                      // ignore: avoid_as
-                      (json.decode(snapshot.data.body) as List<dynamic>)
-                          .map((json) => CatalogItem.fromJson(
-                              // ignore: avoid_as
-                              json as Map<String, dynamic>))
-                          .toList();
-                  return ListView.builder(
-                    itemBuilder: (context, index) => items[index],
-                    itemCount: items.length,
-                  );
-                }
-                // We are looking at an error response of some kind.
-                return Text(snapshot.data.body);
-
+                return ListView.builder(
+                  itemBuilder: (context, index) => snapshot.data[index],
+                  itemCount: snapshot.data.length,
+                );
               case ConnectionState.waiting:
                 return const Text('ConnectionState.waiting');
             }
