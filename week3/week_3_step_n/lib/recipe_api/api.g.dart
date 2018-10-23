@@ -70,15 +70,13 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
 
 Ingredient _$IngredientFromJson(Map<String, dynamic> json) {
   return Ingredient(
-      quantity: json['quantity'] as int,
-      measure: json['measure'] as String,
+      quantity: json['quantity'] as String,
       ingredient: json['ingredient'] as String);
 }
 
 Map<String, dynamic> _$IngredientToJson(Ingredient instance) =>
     <String, dynamic>{
       'quantity': instance.quantity,
-      'measure': instance.measure,
       'ingredient': instance.ingredient
     };
 

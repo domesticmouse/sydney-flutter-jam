@@ -18,8 +18,7 @@ import (
 
 // Ingredient is an ingredient used in a recipe
 type Ingredient struct {
-	Quantity   int    `json:"quantity"`
-	Measure    string `json:"measure"`
+	Quantity   string `json:"quantity"`
 	Ingredient string `json:"ingredient"`
 }
 
@@ -59,13 +58,13 @@ var recipes = []Recipe{
 		"An all too cheesy home cooked favourite",
 		"fxm3oIlRapk",
 		[]Ingredient{
-			{500, "g", "Macaroni"},
-			{50, "g", "Butter"},
-			{2, "tbs", "Flour"},
-			{500, "ml", "Milk"},
-			{300, "g", "Tasty cheese"},
-			{50, "g", "Panko breadcrumbs"},
-			{125, "g", "Bacon"},
+			{"500g", "Macaroni"},
+			{"50g", "Butter"},
+			{"2tbs", "Flour"},
+			{"500ml", "Milk"},
+			{"300g", "Tasty cheese"},
+			{"50g", "Panko breadcrumbs"},
+			{"125g", "Bacon"},
 		},
 		[]Step{
 			{"Grate tasty cheese"},
@@ -89,16 +88,16 @@ var recipes = []Recipe{
 		"A heart warming classic, perfect for a cold winter's night",
 		"JDEEsQKEm7I",
 		[]Ingredient{
-			{2, "tbs", "Olive oil"},
-			{2, "", "Brown onion"},
-			{4, "cloves", "Garlic"},
-			{1, "kg", "Beef mince"},
-			{90, "g", "Tomato paste"},
-			{500, "ml", "Beef stock"},
-			{2, "cans", "Chopped tomatoes"},
-			{1, "", "Bay leaf"},
-			{400, "g", "Spaghetti"},
-			{50, "g", "Shaved Parmesan"},
+			{"2tbs", "Olive oil"},
+			{"2", "Brown onions"},
+			{"4 cloves", "Garlic"},
+			{"1kg", "Beef mince"},
+			{"90g", "Tomato paste"},
+			{"500ml", "Beef stock"},
+			{"2 x 400g cans", "Chopped tomatoes"},
+			{"1", "Bay leaf"},
+			{"400g", "Spaghetti"},
+			{"50g", "Shaved Parmesan"},
 		},
 		[]Step{
 			{"Roughly chop brown onions"},

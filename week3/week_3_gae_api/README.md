@@ -70,53 +70,43 @@ $ curl https://flutter-recipe-api.appspot.com/recipes/2
    "image_id":"JDEEsQKEm7I",
    "ingredients":[
       {
-         "quantity":2,
-         "measure":"tbs",
+         "quantity":"2tbs",
          "ingredient":"Olive oil"
       },
       {
-         "quantity":2,
-         "measure":"",
-         "ingredient":"Brown onion"
+         "quantity":"2",
+         "ingredient":"Brown onions"
       },
       {
-         "quantity":4,
-         "measure":"cloves",
+         "quantity":"4 cloves",
          "ingredient":"Garlic"
       },
       {
-         "quantity":1,
-         "measure":"kg",
+         "quantity":"1kg",
          "ingredient":"Beef mince"
       },
       {
-         "quantity":90,
-         "measure":"g",
+         "quantity":"90g",
          "ingredient":"Tomato paste"
       },
       {
-         "quantity":500,
-         "measure":"ml",
+         "quantity":"500ml",
          "ingredient":"Beef stock"
       },
       {
-         "quantity":2,
-         "measure":"cans",
+         "quantity":"2 x 400g cans",
          "ingredient":"Chopped tomatoes"
       },
       {
-         "quantity":1,
-         "measure":"",
+         "quantity":"1",
          "ingredient":"Bay leaf"
       },
       {
-         "quantity":400,
-         "measure":"g",
+         "quantity":"400g",
          "ingredient":"Spaghetti"
       },
       {
-         "quantity":50,
-         "measure":"g",
+         "quantity":"50g",
          "ingredient":"Shaved Parmesan"
       }
    ],
@@ -145,7 +135,7 @@ $ curl https://flutter-recipe-api.appspot.com/recipes/2
          "step":"Cook pasta in salted water until al dente"
       },
       {
-         "step":"Reserve a couple of cups of the pasta water,then drain the pasta"
+         "step":"Reserve a couple of cups of the pasta water, then drain the pasta"
       },
       {
          "step":"In a frypan combine the pasta, a healthy serving of sauce, and some pasta water. Agitate over heat until combined"

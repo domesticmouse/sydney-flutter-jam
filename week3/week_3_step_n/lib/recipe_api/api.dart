@@ -25,8 +25,8 @@ import 'package:flutter/material.dart';
 // Tl;dr:
 // $ flutter packages pub run build_runner build
 
-part './api.g.dart';
-part './widgets.dart';
+part 'api.g.dart';
+part 'widgets.dart';
 
 class FlutterRecipeApi {
   static const String _baseUrl =
@@ -122,15 +122,13 @@ class Recipe {
 class Ingredient {
   const Ingredient({
     this.quantity,
-    this.measure,
     this.ingredient,
   });
 
   factory Ingredient.fromJson(Map<String, dynamic> json) =>
       _$IngredientFromJson(json);
 
-  final int quantity;
-  final String measure;
+  final String quantity;
   final String ingredient;
 
   Map<String, dynamic> toJson() => _$IngredientToJson(this);

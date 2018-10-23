@@ -62,6 +62,7 @@ class RecipeWidget extends StatelessWidget {
   Widget build(BuildContext context) => ListView(
         children: <Widget>[
           Text(recipe.shortDescription),
+          const Text('Ingredients'),
           Column(
             children: recipe.ingredients
                 .map((ingredient) => IngredientListTile(ingredient))
@@ -69,12 +70,15 @@ class RecipeWidget extends StatelessWidget {
           ),
           const Text('Preparation steps'),
           Column(
-            children:
-                recipe.preparation.map((step) => StepListTile(step)).toList(),
+            children: recipe.preparation
+                .map((step) => ListTile(title: Text(step.step)))
+                .toList(),
           ),
           const Text('Cooking steps'),
           Column(
-            children: recipe.cooking.map((step) => StepListTile(step)).toList(),
+            children: recipe.cooking
+                .map((step) => ListTile(title: Text(step.step)))
+                .toList(),
           ),
         ],
       );
@@ -85,17 +89,12 @@ class IngredientListTile extends StatelessWidget {
   final Ingredient ingredient;
   @override
   Widget build(BuildContext context) => ListTile(
-        title: Text(
-          '${ingredient.quantity} ${ingredient.measure} ${ingredient.ingredient}',
+        title: Row(
+          children: [
+            Text(ingredient.quantity),
+            const SizedBox(width: 4),
+            Text(ingredient.ingredient),
+          ],
         ),
-      );
-}
-
-class StepListTile extends StatelessWidget {
-  const StepListTile(this.step);
-  final Step step;
-  @override
-  Widget build(BuildContext context) => ListTile(
-        title: Text(step.step),
       );
 }
