@@ -7,7 +7,7 @@ analyzer:
     - flutter/**
     - lib/*.g.dart
 
-# Lint rules from http://dart-lang.github.io/linter/lints/options/options.html
+# Selected lint rules from http://dart-lang.github.io/linter/lints/options/options.html
 linter:
   rules:
     - always_declare_return_types
