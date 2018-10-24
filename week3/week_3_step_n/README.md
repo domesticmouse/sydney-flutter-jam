@@ -1,6 +1,6 @@
 # week_3_step_n
 
-Bob's Widget store. It's all Widgets.
+Flutter Food, the latest way to get a recipe or two.
 
 ## Getting Started
 
