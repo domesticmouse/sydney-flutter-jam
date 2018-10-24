@@ -22,7 +22,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Flutter Food',
         theme: ThemeData(primarySwatch: Colors.orange),
         home: MyHomePage(title: 'Flutter Food'),
       );
