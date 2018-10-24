@@ -28,6 +28,7 @@ class RecipeHeaderWidget extends StatelessWidget {
       );
 
   void tapHandler(BuildContext context) {
+    final recipeFuture = FlutterRecipeApi.getRecipe(recipeHeader.id);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -35,18 +36,20 @@ class RecipeHeaderWidget extends StatelessWidget {
               appBar: AppBar(
                 title: Text(recipeHeader.name),
               ),
-              body: FutureBuilder<Recipe>(
-                future: FlutterRecipeApi.getRecipe(recipeHeader.id),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const Text('Loading');
-                    case ConnectionState.done:
-                      return RecipeWidget(snapshot.data);
-                    default:
-                      return const Text('todo');
-                  }
-                },
+              body: SafeArea(
+                child: FutureBuilder<Recipe>(
+                  future: recipeFuture,
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return const Text('Loading');
+                      case ConnectionState.done:
+                        return RecipeWidget(snapshot.data);
+                      default:
+                        return const Text('todo');
+                    }
+                  },
+                ),
               ),
             ),
       ),

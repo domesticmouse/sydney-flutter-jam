@@ -41,26 +41,28 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text(title),
         ),
-        body: FutureBuilder<List<RecipeHeader>>(
-          future: _futureResponse,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
-                return ListView.builder(
-                  itemBuilder: (context, index) =>
-                      RecipeHeaderWidget(snapshot.data[index]),
-                  itemCount: snapshot.data.length,
-                );
-              case ConnectionState.waiting:
-                // TODO(DomesticMouse): Loading spinner
-                return const Text('Loading');
-              default:
-                return const Text('');
-            }
-          },
+        body: SafeArea(
+          child: FutureBuilder<List<RecipeHeader>>(
+            future: _futureResponse,
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.done:
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  return ListView.builder(
+                    itemBuilder: (context, index) =>
+                        RecipeHeaderWidget(snapshot.data[index]),
+                    itemCount: snapshot.data.length,
+                  );
+                case ConnectionState.waiting:
+                  // TODO(DomesticMouse): Loading spinner
+                  return const Text('Loading');
+                default:
+                  return const Text('');
+              }
+            },
+          ),
         ),
       );
 }
