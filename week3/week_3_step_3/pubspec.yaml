@@ -1,5 +1,5 @@
-name: week_3_step_n
-description: A new Flutter project.
+name: week_3_step_3
+description: A well used Flutter project.
 version: 1.0.0+1
 
 environment:
@@ -21,8 +21,6 @@ dev_dependencies:
   mockito: ^3.0.0
   build_runner: ^1.0.0
   json_serializable: ^1.5.1
-
-
 
 flutter:
   uses-material-design: true
