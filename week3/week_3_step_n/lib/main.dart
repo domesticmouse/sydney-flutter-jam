@@ -30,11 +30,11 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title})
-      : _futureResponse = FlutterRecipeApi.listRecipes(),
+      : recipes = RecipeApi.listRecipes(),
         super(key: key);
 
   final String title;
-  final Future<List<RecipeHeader>> _futureResponse;
+  final Future<List<RecipeHeader>> recipes;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -43,7 +43,7 @@ class MyHomePage extends StatelessWidget {
         ),
         body: SafeArea(
           child: FutureBuilder<List<RecipeHeader>>(
-            future: _futureResponse,
+            future: recipes,
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:
@@ -56,8 +56,9 @@ class MyHomePage extends StatelessWidget {
                     itemCount: snapshot.data.length,
                   );
                 case ConnectionState.waiting:
-                  // TODO(DomesticMouse): Loading spinner
-                  return const Text('Loading');
+                  return const Center(
+                    child: Text('Loading'),
+                  );
                 default:
                   return const Text('');
               }

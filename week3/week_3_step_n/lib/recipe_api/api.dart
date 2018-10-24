@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 part 'api.g.dart';
 part 'widgets.dart';
 
-class FlutterRecipeApi {
+class RecipeApi {
   static const String _baseUrl =
       'https://flutter-recipe-api.appspot.com/recipes/';
 
@@ -43,7 +43,7 @@ class FlutterRecipeApi {
     }
 
     print('Retrieving recipes failed: ${response.reasonPhrase}');
-    throw FlutterApiException(
+    throw RecipeApiException(
         'Could not retrieve Recipes: ${response.reasonPhrase}');
   }
 
@@ -57,13 +57,13 @@ class FlutterRecipeApi {
     }
 
     print('Retrieving recipes failed: ${response.reasonPhrase}');
-    throw FlutterApiException(
+    throw RecipeApiException(
         'Could not retrieve Recipe $id: ${response.reasonPhrase}');
   }
 }
 
-class FlutterApiException implements Exception {
-  FlutterApiException(this.cause);
+class RecipeApiException implements Exception {
+  RecipeApiException(this.cause);
   final String cause;
 }
 

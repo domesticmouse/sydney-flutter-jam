@@ -28,7 +28,7 @@ class RecipeHeaderWidget extends StatelessWidget {
       );
 
   void tapHandler(BuildContext context) {
-    final recipeFuture = FlutterRecipeApi.getRecipe(recipeHeader.id);
+    final recipeFuture = RecipeApi.getRecipe(recipeHeader.id);
     Navigator.push(
       context,
       MaterialPageRoute(
