@@ -1,5 +1,6 @@
-name: week_2_step_n
+name: flutter_study_jam_week_2
 description: A new Flutter project.
+
 version: 1.0.0+1
 
 environment:
@@ -8,11 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  cloud_firestore: ^0.7.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 flutter:
   uses-material-design: true
